@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Penalty Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #0d1117;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    .container {
+      background: #161b22;
+      border: 2px solid #30363d;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+    }
+    .btn {
+      background: #facc15;
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .direction {
+      font-size: 42px;
+      margin: 20px 0;
+      color: #00ffcc;
+    }
+    .goal {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    .box {
+      width: 80px;
+      height: 80px;
+      background: #222;
+      border: 2px solid #444;
+      border-radius: 6px;
+      line-height: 80px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+    }
+    .highlight {
+      background: #00ff66;
+      color: #000;
+      border: 2px solid #00cc44;
+    }
+    .note {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚽ Penalty Predictor</h1>
+    <p>Next best shot direction:</p>
+    <div class="goal" id="goal">
+      <!-- Goal boxes will go here -->
+    </div>
+    <div class="direction" id="direction">--</div>
+    <button class="btn" onclick="predict()">Predict Now</button>
+    <p class="note">*Prediction is based on internal algorithm</p>
+  </div>
+
+  <script>
+    const directions = [
+      "Top Left", "Top Center", "Top Right",
+      "Middle Left", "Middle Center", "Middle Right",
+      "Bottom Left", "Bottom Center", "Bottom Right"
+    ];
+
+    function predict() {
+      const goal = document.getElementById("goal");
+      const dir = document.getElementById("direction");
+      goal.innerHTML = "";
+
+      const index = Math.floor(Math.random() * 9);
+      const chosen = index;
+
+      directions.forEach((_, i) => {
+        const box = document.createElement("div");
+        box.className = "box";
+        box.textContent = directions[i].split(' ')[1];
+        if (i === chosen) box.classList.add("highlight");
+        goal.appendChild(box);
+      });
+
+      dir.textContent = directions[chosen];
+    }
+
+    // Initialize empty grid
+    window.onload = () => {
+      const goal = document.getElementById("goal");
+      directions.forEach((d, i) => {
+        const box = document.createElement("div");
+        box.className = "box";
+        box.textContent = d.split(' ')[1];
+        goal.appendChild(box);
+      });
+    };
+  </script>
+</body>
+</html>
